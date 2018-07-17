@@ -1,0 +1,83 @@
+<project default="src">
+
+	<target name="src" description="Create a src dir for the Echo2.jar in the build dir based on the Echo2 zip files in the base dir">
+		<property name="build.dir" value="build"/>
+		<mkdir dir="${build.dir}/unzip"/>
+		<unzip src="NextApp_Echo2.zip" dest="${build.dir}/unzip"/>
+		<unzip src="NextApp_Echo2_Extras.zip" dest="${build.dir}/unzip"/>
+		<unzip src="NextApp_Echo2_FileTransfer.zip" dest="${build.dir}/unzip"/>
+		<unzip src="echopointng-src-2.1.0rc5.zip" dest="${build.dir}/unzip"/>
+		<concat destfile="${build.dir}/unzip/NextApp_Echo2/SourceCode/src/webcontainer/java/META-INF/nextapp/echo2/SynchronizePeerBindings.properties" append="true">
+			<fileset dir="${build.dir}" id="concat.fileset">
+				<include name="unzip/NextApp_Echo2_Extras/SourceCode/src/webcontainer/java/META-INF/nextapp/echo2/SynchronizePeerBindings.properties"/>
+				<include name="unzip/NextApp_Echo2_FileTransfer/SourceCode/src/META-INF/nextapp/echo2/SynchronizePeerBindings.properties"/>
+				<include name="unzip/echopointng/projects/jar/src/ui/java/META-INF/nextapp/echo2/SynchronizePeerBindings.properties"/>
+			</fileset>
+		</concat>
+		<delete>
+			<fileset refid="concat.fileset"/>
+		</delete>
+		<zip destfile="${build.dir}/check-for-duplicates.zip" duplicate="fail">
+			<fileset dir="${build.dir}/unzip/NextApp_Echo2/SourceCode/src/app/java" id="src.fileset1">
+				<patternset>
+					<include name="**"/>
+					<exclude name="*.html"/>
+				</patternset>
+			</fileset>
+			<fileset dir="${build.dir}/unzip/NextApp_Echo2/SourceCode/src/webcontainer/java" id="src.fileset2">
+				<patternset>
+					<include name="**"/>
+					<exclude name="*.html"/>
+				</patternset>
+			</fileset>
+			<fileset dir="${build.dir}/unzip/NextApp_Echo2/SourceCode/src/webrender/java" id="src.fileset3">
+				<patternset>
+					<include name="**"/>
+					<exclude name="*.html"/>
+				</patternset>
+			</fileset>
+			<fileset dir="${build.dir}/unzip/NextApp_Echo2_Extras/SourceCode/src/app/java" id="src.fileset4">
+				<patternset>
+					<include name="**"/>
+					<exclude name="*.html"/>
+				</patternset>
+			</fileset>
+			<fileset dir="${build.dir}/unzip/NextApp_Echo2_Extras/SourceCode/src/webcontainer/java" id="src.fileset5">
+				<patternset>
+					<include name="**"/>
+					<exclude name="*.html"/>
+				</patternset>
+			</fileset>
+			<fileset dir="${build.dir}/unzip/NextApp_Echo2_FileTransfer/SourceCode/src" id="src.fileset6">
+				<patternset>
+					<include name="**"/>
+					<exclude name="*.html"/>
+				</patternset>
+			</fileset>
+			<fileset dir="${build.dir}/unzip/echopointng/projects/jar/src/app/java" id="src.fileset7">
+				<patternset>
+					<include name="**"/>
+				</patternset>
+			</fileset>
+			<fileset dir="${build.dir}/unzip/echopointng/projects/jar/src/ui/java" id="src.fileset8">
+				<patternset>
+					<include name="**"/>
+				</patternset>
+			</fileset>
+		</zip>
+		<mkdir dir="${build.dir}/src"/>
+		<copy todir="${build.dir}/src">
+			<fileset refid="src.fileset1"/>
+			<fileset refid="src.fileset2"/>
+			<fileset refid="src.fileset3"/>
+			<fileset refid="src.fileset4"/>
+			<fileset refid="src.fileset5"/>
+			<fileset refid="src.fileset6"/>
+			<fileset refid="src.fileset7"/>
+			<fileset refid="src.fileset8"/>
+		</copy>
+		<eclipse.convertPath fileSystemPath="." property="project.resource"/>
+		<eclipse.refreshLocal resource="${project.resource}" depth="infinite"/>
+	</target>
+
+</project>
