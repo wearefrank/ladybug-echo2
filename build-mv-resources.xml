@@ -1,0 +1,11 @@
+<project default="mv">
+
+	<target name="mv" description="Move resources from java folder to resources folder">
+		<move todir="src/main/resources" includeEmptyDirs="false">
+			<fileset dir="src/main/java">
+				<exclude name="**/*.java"/>
+			</fileset>
+		</move>
+	</target>
+
+</project>
