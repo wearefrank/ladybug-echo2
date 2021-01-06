@@ -113,7 +113,20 @@ public class DomUtil {
                     factory = (TransformerFactory)DomUtil.class.forName("org.apache.xalan.processor.TransformerFactoryImpl").getConstructor(null).newInstance(null);
                 } catch(Exception e2) {
                     // Use the JAXP mechanism.
-                    factory = TransformerFactory.newInstance();
+                    // factory = TransformerFactory.newInstance();
+                    // 20200105: JAXP returning Saxon breaks Echo2 in Ladybug (in all browsers) without any error
+                    // message in logging or system out now Ladybug doesn't have a (transitive) dependency on Xalan
+                    // anymore. The error message in the browser (Cannot process ServerMessage (Phase 2) ...) doesn't
+                    // make it clear that the error was caused by Saxon being used.
+                    try {
+                        // Use JDK internal Xalan as a last resort. Xalan is not added as a dependency to this project
+                        // to prevent Xalan being added as a transitive dependency to projects that depend on this
+                        // project which might give unexpected behaviour when Xalan is being selected by JAXP for such
+                        // a project.
+                        factory = (TransformerFactory)DomUtil.class.forName("com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl").getConstructor(null).newInstance(null);
+                    } catch(Exception e3) {
+                        e3.printStackTrace(System.out);
+                    }
                 }
             }
             return factory;
