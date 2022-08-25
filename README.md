@@ -28,3 +28,7 @@ prevent java.io.NotSerializableException when the application wants to persist
 sessions. In general this might happen on restart in case it's configured to
 save session data. WebSphere will also serialize session data when
 SessionObjectSize is enabled in PMI (Performance Monitoring Infrastructure).
+
+Adjusted nextapp.echo2.webrender.service.JavaScriptService and 
+echopointng.ui.util.JavaScriptSnippetService to use text/javascript instead of
+text/plain.

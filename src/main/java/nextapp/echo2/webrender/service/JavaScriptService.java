@@ -132,7 +132,8 @@ implements Service {
      */
     private void serviceGZipCompressed(Connection conn) 
     throws IOException {
-        conn.getResponse().setContentType("text/plain");
+//        conn.getResponse().setContentType("text/plain");
+        conn.getResponse().setContentType("text/javascript");
         conn.getResponse().setHeader("Content-Encoding", "gzip");
         conn.getOutputStream().write(gzipContent);
     }
@@ -144,7 +145,8 @@ implements Service {
      */
     private void servicePlain(Connection conn) 
     throws IOException {
-        conn.getResponse().setContentType("text/plain");
+//        conn.getResponse().setContentType("text/plain");
+        conn.getResponse().setContentType("text/javascript");
         conn.getWriter().print(content);
     }
 }

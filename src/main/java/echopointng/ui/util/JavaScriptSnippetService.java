@@ -122,7 +122,8 @@ public class JavaScriptSnippetService implements Service {
 	 * @see nextapp.echo2.webrender.server.Service#service(nextapp.echo2.webrender.server.Connection)
 	 */
 	public void service(Connection conn) throws IOException {
-		conn.getResponse().setContentType("text/plain");
+//		conn.getResponse().setContentType("text/plain");
+		conn.getResponse().setContentType("text/javascript");
 		conn.getWriter().print(content);
 	}
 
