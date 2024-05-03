@@ -29,6 +29,9 @@
 
 package nextapp.echo2.webcontainer.syncpeer;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.w3c.dom.DocumentFragment;
 import org.w3c.dom.Element;
 
@@ -291,16 +294,105 @@ implements ActionProcessor, ComponentSynchronizePeer, DomUpdateSupport, FocusSup
                     TextComponent.TEXT_CHANGED_PROPERTY, propertyValue);
         } else if (TextComponent.PROPERTY_HORIZONTAL_SCROLL.equals(propertyName)) {
             Extent propertyValue = new Extent(Integer.parseInt(
-                    propertyElement.getAttribute(PropertyUpdateProcessor.PROPERTY_VALUE)));
+                    fixWhenNotAnInteger(propertyElement.getAttribute(PropertyUpdateProcessor.PROPERTY_VALUE))));
             ci.getUpdateManager().getClientUpdateManager().setComponentProperty(component, 
                     TextComponent.PROPERTY_HORIZONTAL_SCROLL, propertyValue);
         } else if (TextComponent.PROPERTY_VERTICAL_SCROLL.equals(propertyName)) {
             Extent propertyValue = new Extent(Integer.parseInt(
-                    propertyElement.getAttribute(PropertyUpdateProcessor.PROPERTY_VALUE)));
+                    fixWhenNotAnInteger(propertyElement.getAttribute(PropertyUpdateProcessor.PROPERTY_VALUE))));
             ci.getUpdateManager().getClientUpdateManager().setComponentProperty(component, 
                     TextComponent.PROPERTY_VERTICAL_SCROLL, propertyValue);
         }
     }
+
+    /**
+     * In rare cases we get an exception / stack trace like in the comment below this method. This is a workaround for
+     * these situations.
+     * 
+     * @param number  the number to fix when not an integer
+     * @return        an integer
+     */
+    private static String fixWhenNotAnInteger(String number) {
+        if (number.contains(".")) {
+            return new BigDecimal(number).setScale(0, RoundingMode.HALF_UP).toString();
+        }
+        return number;
+    }
+//	See below for a stack trace found in the log when the message "An application error has occurred. Your session has
+//	been reset." was shown to the user in the GUI. At the time of this tack trace the workaround wasn't implemented yet,
+//	hence in this version of TextComponentPeer.java, with the workaround implemented, line 293 has moved to line 296.
+//	
+//	08-Mar-2024 09:44:29.998 SEVERE [http-nio-8080-exec-2] org.apache.catalina.core.StandardWrapperValve.invoke Servlet.service() for servlet [TestTool] in context with path [] threw exception
+//	      java.lang.NumberFormatException: For input string: "4.44444465637207"
+//	            at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+//	            at java.lang.Integer.parseInt(Integer.java:580)
+//	            at java.lang.Integer.parseInt(Integer.java:615)
+//	            at nextapp.echo2.webcontainer.syncpeer.TextComponentPeer.processPropertyUpdate(TextComponentPeer.java:293)
+//	            at nextapp.echo2.webcontainer.ContainerSynchronizeService$1.process(ContainerSynchronizeService.java:143)
+//	            at nextapp.echo2.webrender.service.SynchronizeService.processClientMessage(SynchronizeService.java:217)
+//	            at nextapp.echo2.webcontainer.ContainerSynchronizeService.renderUpdate(ContainerSynchronizeService.java:469)
+//	            at nextapp.echo2.webrender.service.SynchronizeService.service(SynchronizeService.java:279)
+//	            at nextapp.echo2.webrender.WebRenderServlet.process(WebRenderServlet.java:273)
+//	            at nextapp.echo2.webrender.WebRenderServlet.doPost(WebRenderServlet.java:189)
+//	            at javax.servlet.http.HttpServlet.service(HttpServlet.java:682)
+//	            at javax.servlet.http.HttpServlet.service(HttpServlet.java:765)
+//	            at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:231)
+//	            at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+//	            at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:52)
+//	            at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+//	            at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+//	            at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:352)
+//	            at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+//	            at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+//	            at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:361)
+//	            at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131)
+//	            at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85)
+//	            at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:361)
+//	            at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+//	            at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:361)
+//	            at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:164)
+//	            at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:361)
+//	            at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+//	            at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:361)
+//	            at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+//	            at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+//	            at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+//	            at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:361)
+//	            at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:117)
+//	            at org.springframework.security.web.context.SecurityContextPersistenceFilter.doFilter(SecurityContextPersistenceFilter.java:87)
+//	            at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:361)
+//	            at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+//	            at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+//	            at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:361)
+//	            at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+//	            at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:117)
+//	            at org.springframework.security.web.FilterChainProxy$VirtualFilterChain.doFilter(FilterChainProxy.java:361)
+//	            at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:225)
+//	            at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:190)
+//	            at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:354)
+//	            at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:267)
+//	            at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+//	            at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+//	            at org.apache.logging.log4j.web.Log4jServletFilter.doFilter(Log4jServletFilter.java:71)
+//	            at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:193)
+//	            at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:166)
+//	            at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:177)
+//	            at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:97)
+//	            at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:662)
+//	            at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:135)
+//	            at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:92)
+//	            at org.apache.catalina.valves.AbstractAccessLogValve.invoke(AbstractAccessLogValve.java:698)
+//	            at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:78)
+//	            at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:367)
+//	            at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:639)
+//	            at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:65)
+//	            at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:885)
+//	            at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1688)
+//	            at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:49)
+//	            at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1191)
+//	            at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659)
+//	            at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
+//	            at java.lang.Thread.run(Thread.java:750)
 
     /**
      * @see nextapp.echo2.webcontainer.ComponentSynchronizePeer#renderAdd(nextapp.echo2.webcontainer.RenderContext,

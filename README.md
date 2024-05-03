@@ -32,3 +32,6 @@ SessionObjectSize is enabled in PMI (Performance Monitoring Infrastructure).
 Adjusted nextapp.echo2.webrender.service.JavaScriptService and 
 echopointng.ui.util.JavaScriptSnippetService to use text/javascript instead of
 text/plain.
+
+Added fixWhenNotAnInteger() to TextComponentPeer.java to prevent "An application error has occurred. Your session has
+been reset."
