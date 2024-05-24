@@ -29,8 +29,7 @@
 
 package nextapp.echo2.webcontainer.command;
 
-import javax.servlet.http.Cookie;
-
+import jakarta.servlet.http.Cookie;
 import nextapp.echo2.app.Command;
 
 /**

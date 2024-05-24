@@ -35,9 +35,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import nextapp.echo2.app.filetransfer.UploadSelect;
 
 /**

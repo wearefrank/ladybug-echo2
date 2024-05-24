@@ -33,8 +33,15 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 
+import echopointng.AutoLookupTextFieldEx;
+import echopointng.EPNG;
+import echopointng.text.AutoLookupModel.Entry;
+import echopointng.util.HtmlKit;
+import echopointng.xhtml.XhtmlFragment;
+import jakarta.servlet.http.HttpServletRequest;
 import nextapp.echo2.app.Component;
 import nextapp.echo2.app.Style;
 import nextapp.echo2.webrender.Connection;
@@ -44,15 +51,6 @@ import nextapp.echo2.webrender.ServiceRegistry;
 import nextapp.echo2.webrender.WebRenderServlet;
 import nextapp.echo2.webrender.output.HtmlDocument;
 import nextapp.echo2.webrender.output.XmlDocument;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
-import echopointng.AutoLookupTextFieldEx;
-import echopointng.EPNG;
-import echopointng.text.AutoLookupModel.Entry;
-import echopointng.util.HtmlKit;
-import echopointng.xhtml.XhtmlFragment;
 
 /**
  * <code>AutoLookupService</code> is used to provide data to a

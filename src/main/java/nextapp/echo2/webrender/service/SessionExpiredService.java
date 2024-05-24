@@ -31,8 +31,7 @@ package nextapp.echo2.webrender.service;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpServletResponse;
 import nextapp.echo2.webrender.Connection;
 import nextapp.echo2.webrender.ContentType;
 import nextapp.echo2.webrender.Service;

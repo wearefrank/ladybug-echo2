@@ -37,9 +37,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.http.HttpServletRequest;
-
+import echopointng.ExternalEventMonitor;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.http.HttpServletRequest;
 import nextapp.echo2.app.ApplicationInstance;
 import nextapp.echo2.app.TaskQueueHandle;
 import nextapp.echo2.webcontainer.ContainerInstance;
@@ -47,7 +47,6 @@ import nextapp.echo2.webrender.Connection;
 import nextapp.echo2.webrender.Service;
 import nextapp.echo2.webrender.ServiceRegistry;
 import nextapp.echo2.webrender.WebRenderServlet;
-import echopointng.ExternalEventMonitor;
 
 /**
  * This service is used to listen for external events that come in when
@@ -203,7 +202,7 @@ implements Service {
 				if (dispatcher == null )
 					throw new IOException("No Request Dispatcher for " + uri);
 				dispatcher.forward(conn.getRequest(),conn.getResponse());
-			} catch (javax.servlet.ServletException se) {
+			} catch (jakarta.servlet.ServletException se) {
 				throw new IOException("Dispatch ServletException : " + se.toString());
 			}
 		}

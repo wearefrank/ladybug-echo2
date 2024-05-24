@@ -32,13 +32,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.Collection;
 import java.util.Locale;
 
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-
 import echopointng.util.reflect.ReflectionKit;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * An HttpServletResponse that will capture the content
@@ -109,9 +109,9 @@ public class CapturedHttpServletResponse implements HttpServletResponse {
 	 * @see javax.servlet.http.HttpServletResponse#encodeRedirectUrl(java.lang.String)
 	 * @deprecated
 	 */
-	public String encodeRedirectUrl(String arg0) {
-		return wrappedResponse.encodeRedirectUrl(arg0);
-	}
+//	public String encodeRedirectUrl(String arg0) {
+//		return wrappedResponse.encodeRedirectUrl(arg0);
+//	}
 
 	/** 
 	 * @see javax.servlet.http.HttpServletResponse#encodeRedirectURL(java.lang.String)
@@ -124,9 +124,9 @@ public class CapturedHttpServletResponse implements HttpServletResponse {
 	 * @see javax.servlet.http.HttpServletResponse#encodeUrl(java.lang.String)
 	 * @deprecated
 	 */
-	public String encodeUrl(String arg0) {
-		return wrappedResponse.encodeUrl(arg0);
-	}
+//	public String encodeUrl(String arg0) {
+//		return wrappedResponse.encodeUrl(arg0);
+//	}
 
 	/**
 	 * @see javax.servlet.http.HttpServletResponse#encodeURL(java.lang.String)
@@ -287,9 +287,9 @@ public class CapturedHttpServletResponse implements HttpServletResponse {
 	 * @see javax.servlet.http.HttpServletResponse#setStatus(int, java.lang.String)
 	 * @deprecated
 	 */
-	public void setStatus(int arg0, String arg1) {
-		wrappedResponse.setStatus(arg0, arg1);
-	}
+//	public void setStatus(int arg0, String arg1) {
+//		wrappedResponse.setStatus(arg0, arg1);
+//	}
 	/**
 	 * Added for Servlet 2.4 support
 	 */
@@ -303,5 +303,30 @@ public class CapturedHttpServletResponse implements HttpServletResponse {
 		ReflectionKit.invokeIfPresent("setCharacterEncoding",
 				new Class[]{String.class}, Void.TYPE,
 				wrappedResponse, new Object[] { newValue });
+	}
+
+	@Override
+	public void setContentLengthLong(long len) {
+		wrappedResponse.setContentLengthLong(len);
+	}
+
+	@Override
+	public int getStatus() {
+		return wrappedResponse.getStatus();
+	}
+
+	@Override
+	public String getHeader(String name) {
+		return wrappedResponse.getHeader(name);
+	}
+
+	@Override
+	public Collection<String> getHeaders(String name) {
+		return wrappedResponse.getHeaders(name);
+	}
+
+	@Override
+	public Collection<String> getHeaderNames() {
+		return wrappedResponse.getHeaderNames();
 	}
 }

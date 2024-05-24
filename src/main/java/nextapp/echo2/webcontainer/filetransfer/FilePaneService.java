@@ -33,8 +33,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Serializable;
 
-import javax.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpServletResponse;
 import nextapp.echo2.app.filetransfer.DownloadProvider;
 import nextapp.echo2.app.filetransfer.FilePane;
 import nextapp.echo2.webcontainer.ContainerInstance;

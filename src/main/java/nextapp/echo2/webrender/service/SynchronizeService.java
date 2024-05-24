@@ -36,12 +36,11 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
+import jakarta.servlet.http.HttpServletRequest;
 import nextapp.echo2.webrender.ClientAnalyzerProcessor;
 import nextapp.echo2.webrender.Connection;
 import nextapp.echo2.webrender.ContentType;

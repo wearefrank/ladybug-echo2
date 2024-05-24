@@ -32,22 +32,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 
-import javax.servlet.Servlet;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.jsp.JspFactory;
-import javax.servlet.jsp.JspWriter;
-import javax.servlet.jsp.PageContext;
-
-import nextapp.echo2.webcontainer.RenderContext;
-
 import org.w3c.dom.Element;
 
 import echopointng.template.JspTemplateDataSource;
 import echopointng.template.TemplateDataSource;
 import echopointng.ui.util.io.CapturedHttpServletResponse;
 import echopointng.util.throwable.ThrowableKit;
+import jakarta.servlet.Servlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.jsp.JspFactory;
+import jakarta.servlet.jsp.JspWriter;
+import jakarta.servlet.jsp.PageContext;
+import nextapp.echo2.webcontainer.RenderContext;
 
 /** 
  * <code>JspXHTMLTemplateCompiler</code> can compile

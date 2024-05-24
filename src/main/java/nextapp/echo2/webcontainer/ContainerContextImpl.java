@@ -33,9 +33,8 @@ import java.io.Serializable;
 import java.security.Principal;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpSession;
-
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpSession;
 import nextapp.echo2.app.TaskQueueHandle;
 import nextapp.echo2.webrender.ClientConfiguration;
 import nextapp.echo2.webrender.ClientProperties;

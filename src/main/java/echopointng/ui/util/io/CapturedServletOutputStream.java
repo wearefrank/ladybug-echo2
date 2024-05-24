@@ -30,7 +30,8 @@ package echopointng.ui.util.io;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import javax.servlet.ServletOutputStream;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.WriteListener;
 
 /**
  * An ServletOutputStream that will capture the content
@@ -187,5 +188,15 @@ public class CapturedServletOutputStream extends ServletOutputStream {
 	 */
 	public void write(byte[] b, int off, int len) throws IOException {
 		out.write(b, off, len);
+	}
+
+	@Override
+	public boolean isReady() {
+		return true;
+	}
+
+	@Override
+	public void setWriteListener(WriteListener writeListener) {
+		// TODO Auto-generated method stub
 	}
 }

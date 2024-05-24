@@ -31,8 +31,7 @@ package nextapp.echo2.webcontainer.image;
 
 import java.io.IOException;
 
-import javax.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpServletResponse;
 import nextapp.echo2.app.ImageReference;
 import nextapp.echo2.webcontainer.ContainerInstance;
 import nextapp.echo2.webrender.Connection;

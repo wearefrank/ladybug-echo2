@@ -39,15 +39,14 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.fileupload2.core.FileItem;
+import org.apache.commons.fileupload2.core.FileUploadException;
+import org.apache.commons.fileupload2.jakarta.servlet6.JakartaServletDiskFileUpload;
 
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import nextapp.echo2.app.filetransfer.UploadSelect;
 import nextapp.echo2.webrender.Connection;
-
-import org.apache.commons.fileupload.DiskFileUpload;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
 
 /**
  * Implementation of MultipartUploadSPI that uses the Jakarta Commons FileUpload
@@ -61,7 +60,7 @@ public class JakartaCommonsFileUploadProvider extends AbstractFileUploadProvider
      */
     public void updateComponent(Connection conn, UploadSelect uploadSelect) throws IOException, ServletException {
 
-        DiskFileUpload handler = null;
+        JakartaServletDiskFileUpload handler = null;
         HttpServletRequest request = null;
         List items = null;
         Iterator it = null;
@@ -73,10 +72,10 @@ public class JakartaCommonsFileUploadProvider extends AbstractFileUploadProvider
         String name = null;
 
         try {
-            handler = new DiskFileUpload();
+            handler = new JakartaServletDiskFileUpload();
             handler.setSizeMax(getFileUploadSizeLimit());
-            handler.setSizeThreshold(getMemoryCacheThreshold());
-            handler.setRepositoryPath(getDiskCacheLocation().getCanonicalPath());
+//            handler.setSizeThreshold(getMemoryCacheThreshold());
+//            handler.setRepositoryPath(getDiskCacheLocation().getCanonicalPath());
 
             request = conn.getRequest();
             items = handler.parseRequest(request);

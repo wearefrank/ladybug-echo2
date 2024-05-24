@@ -32,8 +32,7 @@ package nextapp.echo2.webcontainer.filetransfer;
 import java.io.File;
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-
+import jakarta.servlet.ServletException;
 import nextapp.echo2.app.filetransfer.UploadSelect;
 import nextapp.echo2.webrender.Connection;
 import nextapp.echo2.webrender.WebRenderServlet;
