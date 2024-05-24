@@ -1,7 +1,3 @@
-Latest binary distro's of Echo2 aren't compiled for Java 1.4 anymore:
-
-http://echo.nextapp.com/site/node/6200
-
 Following (nightly build) files downloaded on 20100210:
 
 http://download.nextapp.com/downloads/echo2go/NextApp_Echo2.zip
@@ -10,6 +6,9 @@ http://download.nextapp.com/downloads/echo2go/NextApp_Echo2_FileTransfer.zip
 http://sourceforge.net/projects/echopoint/files/echopointng/2.1.0rc5/echopointng-src-2.1.0rc5.zip/download
 
 Source files extracted using the build.xml file
+
+This was initially done because latest binary distro's of Echo2 weren't compiled for Java 1.4 anymore. Since then the
+following changes have been done:
 
 Following lines added to nextapp.echo2.webcontainer.filetransfer.DownloadService
 (see http://echo.nextapp.com/site/node/4092 also):
@@ -35,3 +34,5 @@ text/plain.
 
 Added fixWhenNotAnInteger() to TextComponentPeer.java to prevent "An application error has occurred. Your session has
 been reset."
+
+Upgrade javax to jakarta
