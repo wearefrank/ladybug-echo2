@@ -36,3 +36,7 @@ Added fixWhenNotAnInteger() to TextComponentPeer.java to prevent "An application
 been reset."
 
 Upgrade javax to jakarta
+
+Use relative url instead of absolute url for situations where there is a proxy between the browser and Echo2 and for
+example the webapp is running on /, the browser is using /test and the proxy is removing test (see
+Connection.initUserInstance()).

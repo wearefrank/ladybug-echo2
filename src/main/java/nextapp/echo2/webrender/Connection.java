@@ -219,7 +219,18 @@ public class Connection {
      */
     void initUserInstance(UserInstance userInstance) {
         this.userInstance = userInstance;
-        userInstance.setServletUri(request.getRequestURI());
+        // The servletUri will determine the url in <script src="..." and EchoClientEngine.init('...', true) of the
+        // html returned to the browser. Try to make it relative for situations where there is a proxy between the
+        // browser and Echo2 and for example the webapp is running on /, the browser is using /test and the proxy is
+        // removing test
+        String servletUri = request.getServletPath();
+        if (servletUri == null) {
+            // Fallback to absolute path
+            servletUri = request.getRequestURI();
+        } else if (servletUri.startsWith("/")) {
+            servletUri = servletUri.substring(1);
+        }
+        userInstance.setServletUri(servletUri);
         HttpSession session = request.getSession(true);
         session.setAttribute(getSessionKey(), userInstance);
     }
