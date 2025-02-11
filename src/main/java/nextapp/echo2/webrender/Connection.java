@@ -227,8 +227,8 @@ public class Connection {
         if (servletUri == null) {
             // Fallback to absolute path
             servletUri = request.getRequestURI();
-        } else if (servletUri.startsWith("/")) {
-            servletUri = servletUri.substring(1);
+        } else if (servletUri.indexOf('/') != -1) {
+            servletUri = servletUri.substring(servletUri.lastIndexOf('/') + 1);
         }
         userInstance.setServletUri(servletUri);
         HttpSession session = request.getSession(true);
